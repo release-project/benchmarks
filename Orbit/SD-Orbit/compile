@@ -1,0 +1,47 @@
+#!/usr/bin/env escript
+
+main(Args) ->
+	mkdir("ebin"),
+    %% Check for force=1 flag to force a rebuild
+    case lists:member("force=1", Args) of
+        true ->
+            rm("ebin/*.beam");
+        false ->
+            ok
+    end,
+
+    %% Add check for debug flag
+    DebugFlag = case lists:member("debug", Args) of
+                    true -> debug_info;
+                    false -> undefined
+                end,
+
+    %% Extract the system info of the version of OTP we use to compile 
+    OtpInfo = string:strip(erlang:system_info(otp_release), both, $\n),
+
+    %% Compile all src/*.erl to ebin
+    case make:files(filelib:wildcard("src/*.erl"),
+                    [{outdir, "ebin"}, {i, "include"},
+                     DebugFlag,
+                     {d, 'OTP_INFO', OtpInfo}
+                     ]) of
+        up_to_date ->
+            ok;
+        error ->
+            io:format("Failed to compile orbit files!\n"),
+            halt(1)
+    end.
+
+rm(Path) ->
+    NativePath = filename:nativename(Path),
+    Cmd = case os:type() of
+              {unix,_} -> "rm -f ";
+              {win32,_} -> "del /q "
+          end,
+    [] = os:cmd(Cmd ++ NativePath),
+    ok.
+
+mkdir(Dir) ->
+	filelib:ensure_dir(Dir++"/"),
+    ok.
+

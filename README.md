@@ -1,10 +1,8 @@
-benchmarks
+Benchmarks
 ==========
 
-Benchmarks and tutorial information for RELEASE Workshop
+Here we keep open source benchmarks that were used and developed in the RELEASE project:
 
-* AboutOrbitBenchmark.pdf contains general information about Orbit benchmark
+* DE-Bench -- a scalable reliable peer-to-peer benchmarking tool for distributed Erlang based on Basho Bench. It measures throughput and latency of distributed Erlang commands on a set of Erlang nodes.
 
-* D-Orbit is a distributed Erlang version of Orbit.
-
-* SD-Orbit is an SD Erlang version of Orbit/
+* Orbit -- is a symbolic computing kernel and a generalization of a transitive closure computation.

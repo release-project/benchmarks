@@ -1,0 +1,9 @@
+Some scripts to run the smp ACO version with varying numbers of ants
+using a number of different ERlang/OTP versions.  
+
+* run-tests       : submit SLURM jobs to run test-ants with various Erlang versions
+* test-ants       : run aco with 1, 500, 1000, 1500, ..., 100000 ants
+
+* run-tests-small : submit SLURM jobs to run test-ants-small with various Erlang versions
+* test-ants-small : run aco with 1, 50, 100, 150, ..., 1000 ants
+

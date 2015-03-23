@@ -1,0 +1,41 @@
+Optimal results for the large instances (n=1000)
+
+Instance	Optimal Values
+----------------------------------------
+wt_1000_1		 661265390
+wt_1000_2		 684518705
+wt_1000_3		 579257186
+wt_1000_4		 631856107
+wt_1000_5		 667235710
+wt_1000_6		 467732166
+wt_1000_7		 396847657
+wt_1000_8		 428531122
+wt_1000_9		 398039149
+wt_1000_10		 479549878
+wt_1000_11		 229652979
+wt_1000_12		 224592743
+wt_1000_13		 226941187
+wt_1000_14		 211502185
+wt_1000_15		 220325327
+wt_1000_16		  67040144
+wt_1000_17		  69176483
+wt_1000_18		  73481656
+wt_1000_19		  68164711
+wt_1000_20		  52213830
+wt_1000_21		  10601919
+wt_1000_22		   8151509
+wt_1000_23		  13257992
+wt_1000_24		   7309791
+wt_1000_25		  14450905
+----------------------------------------
+
+Optimal results have been made available on December 1, 2011,
+by Shunji Tanaka, Department of Electrical Engineering, Kyoto
+University Kyotodaigaku-Katsura, Nishikyo-ku, Kyoto 615-8510,
+Japan. Shunji Tanaka recorded a computing time of about two
+days for each instance, using two Xeon E5620 and 96 GB RAM. He
+maintains a SMTWTP-page under
+http://turbine.kuee.kyoto-u.ac.jp/~tanaka/SiPS/
+
+Remark: The optimal job sequences are available, also (provided
+by Shunji Tanaka).

@@ -1,0 +1,111 @@
+This a distributed version of the ACO program for the Single Machine
+Total Weighted Tardiness Problem.
+
+
+Program structure
+-----------------
+
+There's a master process which spawns a number of colonies on
+specified Erlang nodes.  
+
+Each colony spwans a number of ant processes which each construct a
+solution and reports it back to the process in charge of the colony
+(let's call that the "colony master").  The colony master decides
+which solution is best and uses it to update the pheromone matrix
+which is stored in an ETS table (visible to that colony but not to
+others), and the ants construct new solutions guided by the pheromone
+matrix.  
+
+After a specified number of these local iterations, the colony masters
+report their results back to the global master, which then decides
+which colony has the best solution and broadcasts it to all of the
+colonies.  These then use it to update their pheromone matrices 
+(hopefully benefitting from the experience of the most successful
+colony).  Ant processes persist between local iterations.
+
+After a certain number of global iterations, the global master reports
+back the best result and stops.  Ant processes in the individual colonies are
+stopped, but the VMs continue to run.
+
+At present, all communication is done using PIDs (not global names),
+and there's no attempt to make it failure-tolerant.
+
+
+Running the program
+-------------------
+
+To run the ACO example, start up a number of VMs on different machines,
+with a command like "erl -noinput -sname aco" in the directory containing 
+the ACO code.  on the master node,  type something like
+
+ aco ../inputs/orlib/wt40/wt40.001 50 40 20 nodes
+
+The first argument is the name of a file containing input for the SMTWTP
+(in this case, wt40.001 contains a problem of size 40).
+The second argument (50 here) is the number of ants per colony.
+The third argument (40 here) is the number of global iterations.
+The fourth argument (20 here) is the number of local iterations 
+performed by each colony before reporting back to the global master.
+The fifth argument ("nodes") is the name of a file which contains
+the name of the VMs which you're running.  These should be given as an
+Erlang list, for example:
+
+  [aco1@jove, aco2@jove, aco@bwlf01, aco@bwlf22].
+
+The contents of the file must end with a full stop.  Note that you can
+have multiple VMs on the same host.
+
+To stop all of the VMs, you can type
+
+  aco stop <name of node file>
+
+There are various other options.  Type "aco" with no arguments to see them.
+
+NOTE.  There's a C crypto library missing (or outdated) on the
+Heriot-Watt machines.  I use this for random number initialisation in
+order to make sure that every ant uses different random numbers.  Use
+the 'N' flag to seed with now() instead.  This should work on any machine,
+but may not give quite as much randomness as required.  This shouldn't 
+matter for many purposes.
+
+
+Files
+-----
+
+The source files are as follows: 
+
+
+aco: shell script to run the Erlang code
+
+aco.erl
+   Parses arguments and reads files, then calls ant_master.
+
+ant_master.erl
+   The global master.  This spawns the colonies and coordinates their behaviour.
+
+ant_colony.erl
+   The colony master.  This spawns the ants and coordinates their behaviour.
+
+ant.erl
+   An individual ant.  This constructs a solution guided by the pheromone matrix.
+
+update.erl
+   Code to update pheromone matrices.
+
+fitness.erl 
+   Code for calculating quality of solutions and certain heuristic information.
+
+localsearch.erl
+   Performs a local search to improve the quality of solutions constructed by ants.
+   This is experimental and is turned off by default.  If turned on, it may increase
+   duration and variability of execution time significantly.
+
+util.erl
+   Various utility functions.
+
+types.hrl
+   Type declarations.
+
+--------------------------------------------------------------------------------
+
+Kenneth MacKenzie, 11th May 2014.

@@ -1,0 +1,8 @@
+#/bin/bash
+versions="otp-R15B otp_src_R15B03 otp_src_R16B03 otp_src_R16B03-1 otp_src_17.0 otp_src_17.1 otp_src_17.3 otp_src_17.4 otp-rebased"
+
+for v in $versions
+do
+	sbatch -N1 -c24 -xatcn661 -t2-0:0:0 test-ants $HOME/release/$v $v
+done
+

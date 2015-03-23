@@ -1,0 +1,2 @@
+#!/bin/bash
+erl -noinput -s aco run $* -s init stop

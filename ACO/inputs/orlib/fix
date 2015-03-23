@@ -1,0 +1,19 @@
+# Invoke with "awk -f fix -v njobs=... -v k=... wt<njobs>.txt"
+# k is number of input lines per output line (2,3 and 5 for wt 40, 50 & 100 respectively.
+
+BEGIN { n=0; line=1; part=1 }
+{
+  if (line==1 && part==1) {
+    n=n+1;
+    file = sprintf ("wt%d.%03d", njobs, n);
+    print njobs > file;
+  }
+  printf ("%s", $0) >> file;
+  if (part++==k) {
+    printf ("\n") >> file;
+    part=1;
+    line = line+1;
+    if (line>3) line=1
+  }
+}
+  

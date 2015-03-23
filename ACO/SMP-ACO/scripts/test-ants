@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo "Running on $HOSTNAME",
+echo "Job id is $SLURM_JOBID"
+echo "Erlang version is $1"
+
+ERL=$1
+DIR=$2
+step=500
+
+iterations=50
+# Execution time is approximately proportional to number of iterations...
+
+input=../../inputs/orlib/wt40/wt40.022
+# ... and quadratic in size of input (40 here)
+
+mkdir -p $DIR
+cd $DIR
+$ERL/bin/erlc ../*.erl
+
+echo "num.ants run time" > output
+for ants in 1 $(seq $step $step 100000)
+do
+    for run in 1 2 3 4 5
+    do
+	echo -n "$ants $run "
+	$ERL/bin/erl +P 262144 -noinput -s aco run cyclic time $input $ants $iterations -s init stop
+    done
+done >> output
+
+

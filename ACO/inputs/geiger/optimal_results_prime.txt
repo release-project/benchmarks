@@ -1,0 +1,51 @@
+Optimal results for the 'prime' instances
+
+Instance	    Optimal value
+---------------------------------
+wt_100_prime_1		802910360
+wt_100_prime_2		755883602			
+wt_100_prime_3		772936285
+wt_100_prime_4		772242365
+wt_100_prime_5		772266246
+wt_100_prime_6		584502396
+wt_100_prime_7		651160845
+wt_100_prime_8		485031706
+wt_100_prime_9		600247834
+wt_100_prime_10		538889310
+wt_100_prime_11		217962855
+wt_100_prime_12		441851304
+wt_100_prime_13		317231662
+wt_100_prime_14		295071692
+wt_100_prime_15		248660251
+wt_100_prime_16		292956061
+wt_100_prime_17		212953095
+wt_100_prime_18		189128175
+wt_100_prime_19		111382882
+wt_100_prime_20		138182878
+wt_100_prime_21		166716374
+wt_100_prime_22		147222671
+wt_100_prime_23		 58998980
+wt_100_prime_24		108268446
+wt_100_prime_25		163480751
+---------------------------------
+
+The optimal results have been published online on October 28,
+2010, and found by means of local search: A Variable
+Neighborhood Search approach using exchange, backward and
+forward shift as operators has been employed (see also M. J.
+Geiger: On Heuristic Search for the Single Machine Total
+Weighted Tardiness Problem – Some Theoretical Insights and
+their Empirical Verification. European Journal of Operational
+Research 207(3):1235–1243, 2010)
+
+Optimality of the results has been shown by Shunji Tanaka,
+Department of Electrical Engineering, Kyoto University
+Kyotodaigaku-Katsura, Nishikyo-ku, Kyoto 615-8510, Japan.
+Shunji Tanaka recorded a computing time of several minutes for
+each instance, using two Xeon E5620 and 96 GB RAM. He maintains
+a SMTWTP-page under
+http://turbine.kuee.kyoto-u.ac.jp/~tanaka/SiPS/
+
+
+Remark: We also have the job sequences available. Contact:
+Martin Josef Geiger, m.j.geiger@hsu-hh.de

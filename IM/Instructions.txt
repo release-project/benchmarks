@@ -1,0 +1,174 @@
+===================================
+Instructions to run the experiments
+===================================
+-----------------
+Local in one host
+-----------------
+  1.- Open a terminal.
+  2.- CD [PATH TO RD-IM or RSD-IM]
+  3.- ./start.sh host servers_R_Nd servers_R_PR servers_total clients traffic qualified_names domain
+	  Where:
+			host: (int) number of host	
+			servers_R_Nd: (int) number of children server nodes per router node
+			servers_R_PR: (int) number of children server nodes per router process
+			servers_total: (int) number of total server nodes
+			clients: (int) number of client nodes
+			traffic: (int) number of traffic generator nodes
+			qualified_names: (y|n) qualified domain name or not
+			domain: domain
+	  For example:
+		./start.sh 1 2 1 2 4 10 y 'bo720-4-01.gla.ac.uk'
+		./start.sh 1 2 1 2 4 10 n vaquilla14a
+
+	Make sure that the start.sh has the full path to the ~/otp/bin/erl in lines 63, 64, 66, 67, 115 and 116.
+
+  4.- From the dashboard@hostname terminal type the following commands (this assumes a 2 router nodes, 4 server, client, and traffic generator nodes architecture):
+
+		Erlang/OTP 17 [erts-6.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
+
+		Eshell V6.3  (abort with ^G)
+		1> launcher:start_bencherl(['router_1@hostname', 'server_1@hostname', 'server_2@hostname', 'router_2@hostname', 'server_3@hostname', 'server_4@hostname', 'client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname', 'traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']).
+
+
+      The same effect is achieved just typing (this assumes a 2 router nodes, 4 server, client, and traffic generator nodes architecture):
+		Erlang/OTP 17 [erts-6.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
+
+		Eshell V6.3  (abort with ^G)
+		1> launcher:start(2,1,4,4,[hostname],1).
+
+		where: 2 is the number of router nodes
+			   1 is the number of server per router process (i.e., how many servers are supervised by each router process)
+			   4 is the number of total server nodes
+			   4 is the number of client nodes.
+			   [hostname] is a list containing all the domains of the hosts in which the system is deployed.
+                          This is usually one, but can be more if the application is hosted in a cluster with
+                          different domains.
+         	   1 is the number of hosts in which the system is deployed.
+
+  5.- Once the IM is launched is time to log in the clients. To do this, just type:
+		Erlang/OTP 17 [erts-6.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
+
+		Eshell V6.3  (abort with ^G)
+	    2> doped_client:launch(20000,4,'hostname').
+
+		where: 20000 is the total number of clients to log in.
+			   4 is the number of client nodes.
+			   'hostname' is the host name.
+
+		Alternatively, doped_client:launch(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname']) has the same effect.
+
+  6.- To start the measurement gathering, is necessary to launch the loggers and then the traffic generators. This is done typing the following:
+Erlang/OTP 17 [erts-6.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
+
+		Eshell V6.3  (abort with ^G)
+	    3> logger:launch("test_1", 2, 4, 20000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']).
+
+
+		Note that these are two commands executed in a row. The first is
+			logger:launch("test_1", 4, 12, 5000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/")
+			where: "test_1"	is the experimental condition. This can be "RD-IM-Faulty-1-Second" or any other string. It is important to make this name descriptive and meaningful.
+					2 		is the number of total router nodes.
+					4 		is the number of total server nodes.
+					20000 	is the number of total clients.
+					4 		is the number of client nodes in the architecture.
+					15 		is the number of measurements to gather.
+					60		is the duration (in seconds) of each data collection. In this case is one minute.
+					10000   is the delay threshold (in milliseconds) to which is acceptable to receive a message.
+					'hostname'
+					"/home/mario/Desktop/Test/" is the target path where the files with the measurements will be saved.
+
+		The second is
+			traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']).
+			where: 20000 is the number of total clients,
+				   [client_i@hostname] is the list of all the client nodes present at the architecture.
+
+  7.- To run the fault tolerance experiments, a third command must be run:
+		spawn('router_1@hostname', fun() -> rhesus:chaos_on(5000) end)
+		where: 5000 is the interval in milliseconds at which processes are killed
+
+		This spawns a rhesus process in node router_1@hostname.
+
+	  The prevoius will kill any IM process. To kill only name-registered processes, the command is:
+		baboon:start(5000).
+
+  Summary (2 routers, 4 servers, 4 client/traffic generator nodes; throughput experiment 15 minutes long, recording measurements each 60 seconds; one process killed every five seconds):
+	cd [path]/RD-IM/ or cd [path]/RSD-IM
+	./start.sh 1 2 1 2 4 4 n 'hostname'
+
+	(from dashboard@hostname)
+	Erlang/OTP 17 [erts-6.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
+
+	Eshell V6.3  (abort with ^G)
+    1> launcher:start_bencherl(['router_1@hostname', 'server_1@hostname', 'server_2@hostname', 'router_2@hostname', 'server_3@hostname', 'server_4@hostname', 'client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname', 'traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']).
+
+	2> doped_client:launch(20000,4,'hostname').
+
+	Normal execution:
+	3> logger:launch("test_1", 4, 12, 5000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']).
+
+	Faulty execution:
+	3> logger:launch("test_1", 4, 12, 5000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']), timer:sleep(300000), spawn('router_1@hostname', fun() -> rhesus:chaos_on(5000) end).
+
+	3> logger:launch("test_1", 4, 12, 5000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']), timer:sleep(300000), baboon:start(5000).
+
+======================================
+
+-----------
+GPG Cluster
+-----------
+	The process is similar to the local run. The only difference is that nodes must be launched manually.
+
+  1.- Open as many terminals as the gpg nodes that will be used.
+  2.- ssh -l username gpgnode-XX
+		where: XX is the number of the gpg node.
+  3.- cd [path to RD-IM or RSD-IM]
+  4.- Launch nodes:
+		Router nodes
+			~/otp/bin/erl -detached -name router_Y@gpgnode-XX.dcs.gla.ac.uk -setcookie -a 
+		Server Nodes
+			~/otp/bin/erl -detached -name server_Y@gpgnode-XX.dcs.gla.ac.uk -setcookie -a
+		Client Nodes
+			~/otp/bin/erl -detached -hidden -name client_Y@gpgnode-XX.dcs.gla.ac.uk -setcookie -a
+		Traffic generator nodes
+			~/otp/bin/erl -detached -hidden -name traffic_Y@gpgnode-XX.dcs.gla.ac.uk -setcookie -a
+		Dashboard
+			~/otp/bin/erl dashboard@gpgnode-XX.dcs.gla.ac.uk -setcookie -a
+
+  5.- Then, the rest of the process is similar to the local run:
+		Erlang/OTP 17 [erts-6.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false]
+
+		Eshell V6.3  (abort with ^G)
+		1> launcher:start_bencherl(['router_1@hostname', 'server_1@hostname', 'server_2@hostname', 'router_2@hostname', 'server_3@hostname', 'server_4@hostname', 'client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname', 'traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']).
+
+		2> doped_client:launch(20000,4,'hostname').
+
+		or
+
+		2> doped_client:launch(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname']).
+
+ 		3> logger:launch("test_1", 2, 4, 20000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']).
+
+		or for fault tolerance experiments:
+		3> logger:launch("test_1", 4, 12, 5000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']), timer:sleep(300000), spawn('router_1@hostname', fun() -> rhesus:chaos_on(5000) end).
+
+		3> logger:launch("test_1", 4, 12, 5000, 4, 15, 60, 10000, 'hostname', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@hostname', 'client_2@hostname', 'client_3@hostname', 'client_4@hostname'], ['traffic_1@hostname', 'traffic_2@hostname', 'traffic_3@hostname', 'traffic_4@hostname']), timer:sleep(300000), baboon:start(5000).
+
+======================================
+
+Notes:
+	- Each time that an experiment is finished, the application is stopped and must be restarted again. This implies launching the nodes from the terminal either using the script (if run locally) or manually as described in 4 if it is run distributed in the GPG Cluster. This is specially painful in the case of the RSD-IM because it can take up to 5 minutes to start the application.
+	- The RSD-IM has a self-check mechanism that informs whether the launch was successful or not. You must wait a little bit to make sure that the IM is correctly deployed.
+	- If something fails, the virtual machine becomes irresponsive or you need to kill multiple virtual machines in one go, the easiest way is to type
+         killall beam.smp
+
+      on the terminal.
+	- Latency experiments should change logger:launch/10 for logger:launch_latency/7 (check logger.erl module to see the parameters).
+	- To put all the result files together, the process is as follows:
+		0.- Make sure that the .class files containing the data cleaner program are in the directory where the result files are stored.
+		1.- cd [path where the files are stored]
+		2.- ls *Node*.csv > thr.txt
+		3.- java Main thr.txt
+
+		The final files are those that do not have "Node*.*" in their names. These are .csv files so they should not be any problems importing them into SPSS, Excel, R, GNUplot...
+
+Any doubts, check the module files or email me.

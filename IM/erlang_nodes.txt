@@ -1,0 +1,204 @@
+RSD-IM:
+['router_1@gpgnode-04.dcs.gla.ac.uk', 'router_2@gpgnode-08.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-09.dcs.gla.ac.uk', 'server_5@gpgnode-10.dcs.gla.ac.uk', 'server_6@gpgnode-11.dcs.gla.ac.uk', 'client_1@gpgnode-12.dcs.gla.ac.uk', 'client_2@gpgnode-12.dcs.gla.ac.uk', 'client_3@gpgnode-12.dcs.gla.ac.uk', 'client_4@gpgnode-12.dcs.gla.ac.uk', 'traffic_1@gpgnode-13.dcs.gla.ac.uk', 'traffic_2@gpgnode-13.dcs.gla.ac.uk', 'traffic_3@gpgnode-13.dcs.gla.ac.uk', 'traffic_4@gpgnode-13.dcs.gla.ac.uk']
+
+
+['client_1@gpgnode-12.dcs.gla.ac.uk', 'client_2@gpgnode-12.dcs.gla.ac.uk', 'client_3@gpgnode-12.dcs.gla.ac.uk', 'client_4@gpgnode-12.dcs.gla.ac.uk', 'traffic_1@gpgnode-13.dcs.gla.ac.uk', 'traffic_2@gpgnode-13.dcs.gla.ac.uk', 'traffic_3@gpgnode-13.dcs.gla.ac.uk', 'traffic_4@gpgnode-13.dcs.gla.ac.uk']
+
++----------------+
+| LAUNCH CLIENTS |
++----------------+
+doped_client:launch(165000,4,'gpgnode-12.dcs.gla.ac.uk').
+
++------------+
+| THROUGHPUT |
++------------+
+logger:launch("RD-IM-01", 2, 6, 165000, 4, 15, 60, 10000, 'gpgnode-12.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/"), traffic_generator:start(165000, ['client_1@gpgnode-12.dcs.gla.ac.uk', 'client_2@gpgnode-12.dcs.gla.ac.uk', 'client_3@gpgnode-12.dcs.gla.ac.uk', 'client_4@gpgnode-12.dcs.gla.ac.uk'], ['traffic_1@gpgnode-13.dcs.gla.ac.uk', 'traffic_2@gpgnode-13.dcs.gla.ac.uk', 'traffic_3@gpgnode-13.dcs.gla.ac.uk', 'traffic_4@gpgnode-13.dcs.gla.ac.uk']).
+
++---------+
+| LATENCY |
++---------+
+
++--------+
+| SANITY |
++--------+
+spawn('server_1@gpgnode-05.dcs.gla.ac.uk', fun() -> sanity:info() end).
+spawn('server_2@gpgnode-06.dcs.gla.ac.uk', fun() -> sanity:info() end).
+spawn('server_3@gpgnode-07.dcs.gla.ac.uk', fun() -> sanity:info() end).
+
+spawn('router_1@gpgnode-04.dcs.gla.ac.uk', fun() -> sanity:record("processes_router_1.csv") end), spawn('router_2@gpgnode-08.dcs.gla.ac.uk', fun() -> sanity:record("processes_router_2.csv") end).
+
++------------------------------+
+| MANUAL SERVERS SELF-CHECKING |
++------------------------------+
+spawn('server_1@gpgnode-05.dcs.gla.ac.uk', fun() -> launcher:self_checker(server_group_1, 'server_1@gpgnode-05.dcs.gla.ac.uk', s_group:registered_names({s_group, server_group_1}),0,0)end),
+spawn('server_2@gpgnode-06.dcs.gla.ac.uk', fun() -> launcher:self_checker(server_group_1, 'server_2@gpgnode-06.dcs.gla.ac.uk', s_group:registered_names({s_group, server_group_1}),0,0)end),
+spawn('server_3@gpgnode-07.dcs.gla.ac.uk', fun() -> launcher:self_checker(server_group_1, 'server_3@gpgnode-07.dcs.gla.ac.uk', s_group:registered_names({s_group, server_group_1}),0,0)end),
+spawn('server_4@gpgnode-09.dcs.gla.ac.uk', fun() -> launcher:self_checker(server_group_2, 'server_4@gpgnode-09.dcs.gla.ac.uk', s_group:registered_names({s_group, server_group_2}),0,0)end),
+spawn('server_5@gpgnode-10.dcs.gla.ac.uk', fun() -> launcher:self_checker(server_group_2, 'server_5@gpgnode-10.dcs.gla.ac.uk', s_group:registered_names({s_group, server_group_2}),0,0)end),
+spawn('server_6@gpgnode-11.dcs.gla.ac.uk', fun() -> launcher:self_checker(server_group_2, 'server_6@gpgnode-11.dcs.gla.ac.uk', s_group:registered_names({s_group, server_group_2}),0,0)end).
+
+==========
+* RD-IM: * 	
+==========
+['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk','client_1@gpgnode-08.dcs.gla.ac.uk', 'client_2@gpgnode-08.dcs.gla.ac.uk', 'client_3@gpgnode-08.dcs.gla.ac.uk', 'client_4@gpgnode-08.dcs.gla.ac.uk', 'traffic_1@gpgnode-09.dcs.gla.ac.uk', 'traffic_2@gpgnode-09.dcs.gla.ac.uk', 'traffic_3@gpgnode-09.dcs.gla.ac.uk', 'traffic_4@gpgnode-09.dcs.gla.ac.uk']
+-------------------------------------
+['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'server_5@gpgnode-09.dcs.gla.ac.uk', 'server_6@gpgnode-10.dcs.gla.ac.uk', 'client_1@gpgnode-12.dcs.gla.ac.uk', 'client_2@gpgnode-12.dcs.gla.ac.uk', 'client_3@gpgnode-12.dcs.gla.ac.uk', 'client_4@gpgnode-12.dcs.gla.ac.uk', 'traffic_1@gpgnode-13.dcs.gla.ac.uk', 'traffic_2@gpgnode-13.dcs.gla.ac.uk', 'traffic_3@gpgnode-13.dcs.gla.ac.uk', 'traffic_4@gpgnode-13.dcs.gla.ac.uk']
+
+['router_2@gpgnode-08.dcs.gla.ac.uk', 'server_4@gpgnode-09.dcs.gla.ac.uk', 'server_5@gpgnode-10.dcs.gla.ac.uk', 'server_6@gpgnode-11.dcs.gla.ac.uk','client_1@gpgnode-13.dcs.gla.ac.uk', 'client_2@gpgnode-13.dcs.gla.ac.uk', 'client_3@gpgnode-13.dcs.gla.ac.uk', 'client_4@gpgnode-13.dcs.gla.ac.uk', 'traffic_1@gpgnode-12.dcs.gla.ac.uk', 'traffic_2@gpgnode-12.dcs.gla.ac.uk', 'traffic_3@gpgnode-12.dcs.gla.ac.uk', 'traffic_4@gpgnode-12.dcs.gla.ac.uk']
+-------------------------------------
+
+['client_1@gpgnode-08.dcs.gla.ac.uk', 'client_2@gpgnode-08.dcs.gla.ac.uk', 'client_3@gpgnode-08.dcs.gla.ac.uk', 'client_4@gpgnode-08.dcs.gla.ac.uk', 'traffic_1@gpgnode-09.dcs.gla.ac.uk', 'traffic_2@gpgnode-09.dcs.gla.ac.uk', 'traffic_3@gpgnode-09.dcs.gla.ac.uk', 'traffic_4@gpgnode-09.dcs.gla.ac.uk']
+
++----------------+
+| LAUNCH CLIENTS |
++----------------+
+doped_client:launch(89000,4,'gpgnode-12.dcs.gla.ac.uk').
+-------------------------------------
+doped_client:launch(165000,4,'gpgnode-12.dcs.gla.ac.uk').
+
++------------+
+| THROUGHPUT |
++------------+
+logger:launch("RD-IM-03", 1, 6, 165000, 4, 15, 60, 10000, 'gpgnode-12.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/1-6/"), traffic_generator:start(165000, ['client_1@gpgnode-12.dcs.gla.ac.uk', 'client_2@gpgnode-12.dcs.gla.ac.uk', 'client_3@gpgnode-12.dcs.gla.ac.uk', 'client_4@gpgnode-12.dcs.gla.ac.uk'], ['traffic_1@gpgnode-13.dcs.gla.ac.uk', 'traffic_2@gpgnode-13.dcs.gla.ac.uk', 'traffic_3@gpgnode-13.dcs.gla.ac.uk', 'traffic_4@gpgnode-13.dcs.gla.ac.uk']).
+
++---------+
+| LATENCY |
++---------+
+traffic_generator:start(85000, ['client_1@gpgnode-08.dcs.gla.ac.uk', 'client_2@gpgnode-08.dcs.gla.ac.uk', 'client_3@gpgnode-08.dcs.gla.ac.uk', 'client_4@gpgnode-08.dcs.gla.ac.uk'], ['traffic_1@gpgnode-09.dcs.gla.ac.uk', 'traffic_2@gpgnode-09.dcs.gla.ac.uk', 'traffic_3@gpgnode-09.dcs.gla.ac.uk', 'traffic_4@gpgnode-09.dcs.gla.ac.uk']), timer:sleep(210000), logger:launch_latency("RD-IM-01", 1, 3, 85000, 4, 3, 'gpgnode-08.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/").
+
+traffic_generator:start(89000, ['client_1@gpgnode-12.dcs.gla.ac.uk', 'client_2@gpgnode-12.dcs.gla.ac.uk', 'client_3@gpgnode-12.dcs.gla.ac.uk', 'client_4@gpgnode-12.dcs.gla.ac.uk'], ['traffic_1@gpgnode-13.dcs.gla.ac.uk', 'traffic_2@gpgnode-13.dcs.gla.ac.uk', 'traffic_3@gpgnode-13.dcs.gla.ac.uk', 'traffic_4@gpgnode-13.dcs.gla.ac.uk']), timer:sleep(210000), logger:launch_latency("RD-IM", 1, 3, 89000, 4, 3, 'gpgnode-12.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/").
+
+traffic_generator:start(86000, ['client_1@gpgnode-13.dcs.gla.ac.uk', 'client_2@gpgnode-13.dcs.gla.ac.uk', 'client_3@gpgnode-13.dcs.gla.ac.uk', 'client_4@gpgnode-13.dcs.gla.ac.uk'], ['traffic_1@gpgnode-12.dcs.gla.ac.uk', 'traffic_2@gpgnode-12.dcs.gla.ac.uk', 'traffic_3@gpgnode-12.dcs.gla.ac.uk', 'traffic_4@gpgnode-12.dcs.gla.ac.uk']), timer:sleep(210000), logger:launch_latency("RD-IM", 1, 3, 86000, 4, 3, 'gpgnode-13.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/").
+
++-----------------+
+| SANITY RECORDER |
++-----------------+
+spawn('router_1@gpgnode-04.dcs.gla.ac.uk', fun() -> sanity:record("processes_router_1.csv") end), spawn('router_2@gpgnode-08.dcs.gla.ac.uk', fun() -> sanity:record("processes_router_2.csv") end).
+
+
+['router_1@ishigaki', 'router_2@ishigaki', 'server_1@ishigaki', 'server_2@ishigaki', 'server_3@ishigaki', 'server_4@ishigaki', 'client_1@ishigaki', 'client_2@ishigaki', 'client_3@ishigaki', 'client_4@ishigaki', 'traffic_1@ishigaki', 'traffic_2@ishigaki', 'traffic_3@ishigaki', 'traffic_4@ishigaki']
+
+['client_1@ishigaki', 'client_2@ishigaki', 'client_3@ishigaki', 'client_4@ishigaki'], ['traffic_1@ishigaki', 'traffic_2@ishigaki', 'traffic_3@ishigaki', 'traffic_4@ishigaki']
+
+===========================
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'server_5@gpgnode-09.dcs.gla.ac.uk', 'server_6@gpgnode-10.dcs.gla.ac.uk', 'client_1@gpgnode-02.dcs.gla.ac.uk', 'client_2@gpgnode-02.dcs.gla.ac.uk', 'client_3@gpgnode-02.dcs.gla.ac.uk', 'client_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_1@gpgnode-03.dcs.gla.ac.uk', 'traffic_2@gpgnode-03.dcs.gla.ac.uk', 'traffic_3@gpgnode-03.dcs.gla.ac.uk', 'traffic_4@gpgnode-03.dcs.gla.ac.uk']).
+
+===========================
+==========
+12 SERVERS
+==========
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'server_5@gpgnode-09.dcs.gla.ac.uk', 'server_6@gpgnode-10.dcs.gla.ac.uk', 'server_7@gpgnode-11.dcs.gla.ac.uk', 'server_8@gpgnode-12.dcs.gla.ac.uk', 'server_9@gpgnode-13.dcs.gla.ac.uk', 'server_10@gpgnode-14.dcs.gla.ac.uk', 'server_11@gpgnode-15.dcs.gla.ac.uk', 'server_12@gpgnode-16.dcs.gla.ac.uk', 'client_1@gpgnode-02.dcs.gla.ac.uk', 'client_2@gpgnode-02.dcs.gla.ac.uk', 'client_3@gpgnode-02.dcs.gla.ac.uk', 'client_4@gpgnode-02.dcs.gla.ac.uk', 'client_5@gpgnode-02.dcs.gla.ac.uk', 'client_6@gpgnode-02.dcs.gla.ac.uk', 'client_7@gpgnode-02.dcs.gla.ac.uk', 'client_8@gpgnode-02.dcs.gla.ac.uk', 'client_9@gpgnode-02.dcs.gla.ac.uk', 'client_10@gpgnode-02.dcs.gla.ac.uk', 'client_11@gpgnode-02.dcs.gla.ac.uk', 'client_12@gpgnode-02.dcs.gla.ac.uk', 'traffic_1@gpgnode-03.dcs.gla.ac.uk', 'traffic_2@gpgnode-03.dcs.gla.ac.uk', 'traffic_3@gpgnode-03.dcs.gla.ac.uk', 'traffic_4@gpgnode-03.dcs.gla.ac.uk', 'traffic_5@gpgnode-03.dcs.gla.ac.uk', 'traffic_6@gpgnode-03.dcs.gla.ac.uk', 'traffic_7@gpgnode-03.dcs.gla.ac.uk', 'traffic_8@gpgnode-03.dcs.gla.ac.uk', 'traffic_9@gpgnode-03.dcs.gla.ac.uk', 'traffic_10@gpgnode-03.dcs.gla.ac.uk', 'traffic_11@gpgnode-03.dcs.gla.ac.uk', 'traffic_12@gpgnode-03.dcs.gla.ac.uk']).
+
++----------------+
+| LAUNCH CLIENTS |
++----------------+
+doped_client:launch(160000,4,'gpgnode-02.dcs.gla.ac.uk').
+doped_client:launch(250000,12,'gpgnode-02.dcs.gla.ac.uk').
+
++------------+
+| THROUGHPUT |
++------------+
+logger:launch("RSD-IM-test-02", 1, 12, 160000, 12, 15, 60, 10000, 'gpgnode-02.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/1-16/"), traffic_generator:start(160000, ['client_1@gpgnode-02.dcs.gla.ac.uk', 'client_2@gpgnode-02.dcs.gla.ac.uk', 'client_3@gpgnode-02.dcs.gla.ac.uk', 'client_4@gpgnode-02.dcs.gla.ac.uk', 'client_5@gpgnode-02.dcs.gla.ac.uk', 'client_6@gpgnode-02.dcs.gla.ac.uk', 'client_7@gpgnode-02.dcs.gla.ac.uk', 'client_8@gpgnode-02.dcs.gla.ac.uk', 'client_9@gpgnode-02.dcs.gla.ac.uk', 'client_10@gpgnode-02.dcs.gla.ac.uk', 'client_11@gpgnode-02.dcs.gla.ac.uk', 'client_12@gpgnode-02.dcs.gla.ac.uk'], ['traffic_1@gpgnode-03.dcs.gla.ac.uk', 'traffic_2@gpgnode-03.dcs.gla.ac.uk', 'traffic_3@gpgnode-03.dcs.gla.ac.uk', 'traffic_4@gpgnode-03.dcs.gla.ac.uk', 'traffic_5@gpgnode-03.dcs.gla.ac.uk', 'traffic_6@gpgnode-03.dcs.gla.ac.uk', 'traffic_7@gpgnode-03.dcs.gla.ac.uk', 'traffic_8@gpgnode-03.dcs.gla.ac.uk', 'traffic_9@gpgnode-03.dcs.gla.ac.uk', 'traffic_10@gpgnode-03.dcs.gla.ac.uk', 'traffic_11@gpgnode-03.dcs.gla.ac.uk', 'traffic_12@gpgnode-03.dcs.gla.ac.uk']).
+
+, timer:sleep(300000).
+
+logger:launch("RSD-IM-test-02", 1, 6, 160000, 4, 15, 60, 10000, 'gpgnode-02.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/1-16/"), traffic_generator:start(160000, ['client_1@gpgnode-02.dcs.gla.ac.uk', 'client_2@gpgnode-02.dcs.gla.ac.uk', 'client_3@gpgnode-02.dcs.gla.ac.uk', 'client_4@gpgnode-02.dcs.gla.ac.uk'], ['traffic_1@gpgnode-03.dcs.gla.ac.uk', 'traffic_2@gpgnode-03.dcs.gla.ac.uk', 'traffic_3@gpgnode-03.dcs.gla.ac.uk', 'traffic_4@gpgnode-03.dcs.gla.ac.uk']).
+
+================================
+ EXPERIMENT 2
+================================
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'server_5@gpgnode-09.dcs.gla.ac.uk', 'server_6@gpgnode-10.dcs.gla.ac.uk', 'router_2@gpgnode-11.dcs.gla.ac.uk', 'server_7@gpgnode-12.dcs.gla.ac.uk', 'server_8@gpgnode-13.dcs.gla.ac.uk', 'client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk']).
+
+doped_client:launch(205000,4,'gpgnode-03.dcs.gla.ac.uk').
+
+logger:launch("RD-IM-03", 2, 8, 205000, 4, 15, 60, 10000, 'gpgnode-03.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/experiment_2/2-8/"), traffic_generator:start(205000, ['client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk'], ['traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk']).
+
+===============================
+MAXIMUM CONFIGURATION
+===============================
+
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'server_5@gpgnode-09.dcs.gla.ac.uk', 'server_6@gpgnode-10.dcs.gla.ac.uk', 'router_2@gpgnode-11.dcs.gla.ac.uk', 'server_7@gpgnode-12.dcs.gla.ac.uk', 'server_8@gpgnode-13.dcs.gla.ac.uk', 'server_9@gpgnode-14.dcs.gla.ac.uk', 'server_10@gpgnode-15.dcs.gla.ac.uk', 'server_11@gpgnode-16.dcs.gla.ac.uk', 'server_12@gpgnode-17.dcs.gla.ac.uk', 'client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk', 'client_8@gpgnode-03.dcs.gla.ac.uk', 'traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk', 'traffic_8@gpgnode-02.dcs.gla.ac.uk']).
+
+===============
+2 - 6 - 6 - 7/7
+===============
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'server_5@gpgnode-09.dcs.gla.ac.uk', 'server_6@gpgnode-10.dcs.gla.ac.uk', 'router_2@gpgnode-11.dcs.gla.ac.uk', 'server_7@gpgnode-12.dcs.gla.ac.uk', 'server_8@gpgnode-13.dcs.gla.ac.uk', 'server_9@gpgnode-14.dcs.gla.ac.uk', 'server_10@gpgnode-15.dcs.gla.ac.uk', 'server_11@gpgnode-16.dcs.gla.ac.uk', 'server_12@gpgnode-17.dcs.gla.ac.uk', 'client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk', 'traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk']).
+
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-05.dcs.gla.ac.uk', 'server_3@gpgnode-06.dcs.gla.ac.uk', 'server_4@gpgnode-06.dcs.gla.ac.uk', 'server_5@gpgnode-07.dcs.gla.ac.uk', 'server_6@gpgnode-07.dcs.gla.ac.uk', 'server_7@gpgnode-08.dcs.gla.ac.uk', 'server_8@gpgnode-08.dcs.gla.ac.uk', 'server_9@gpgnode-09.dcs.gla.ac.uk', 'server_10@gpgnode-09.dcs.gla.ac.uk', 'server_11@gpgnode-10.dcs.gla.ac.uk', 'server_12@gpgnode-10.dcs.gla.ac.uk', 'client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk', 'traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk']).
+
+===================
+3 - 4 - 4 - 4 - 7/7
+===================
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'router_2@gpgnode-09.dcs.gla.ac.uk', 'server_5@gpgnode-10.dcs.gla.ac.uk', 'server_6@gpgnode-11.dcs.gla.ac.uk', 'server_7@gpgnode-12.dcs.gla.ac.uk', 'server_8@gpgnode-13.dcs.gla.ac.uk', 'router_3@gpgnode-14.dcs.gla.ac.uk', 'server_9@gpgnode-15.dcs.gla.ac.uk', 'server_10@gpgnode-16.dcs.gla.ac.uk', 'server_11@gpgnode-17.dcs.gla.ac.uk', 'server_12@gpgnode-18.dcs.gla.ac.uk', 'client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk', 'client_8@gpgnode-03.dcs.gla.ac.uk', 'traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk', 'traffic_8@gpgnode-02.dcs.gla.ac.uk']).
+
+=======================
+4 - 3 - 3 - 3 - 3 - 7/7
+=======================
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-05.dcs.gla.ac.uk', 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'router_2@gpgnode-08.dcs.gla.ac.uk', 'server_4@gpgnode-09.dcs.gla.ac.uk', 'server_5@gpgnode-10.dcs.gla.ac.uk', 'server_6@gpgnode-11.dcs.gla.ac.uk', 'router_3@gpgnode-12.dcs.gla.ac.uk', 'server_7@gpgnode-13.dcs.gla.ac.uk', 'server_8@gpgnode-14.dcs.gla.ac.uk', 'server_9@gpgnode-15.dcs.gla.ac.uk', 'router_4@gpgnode-16.dcs.gla.ac.uk', 'server_10@gpgnode-17.dcs.gla.ac.uk', 'server_11@gpgnode-18.dcs.gla.ac.uk', 'server_12@gpgnode-19.dcs.gla.ac.uk', 'client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk', 'client_8@gpgnode-03.dcs.gla.ac.uk', 'traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk', 'traffic_8@gpgnode-02.dcs.gla.ac.uk']).
+
+==========================
+5 - 9 - 9 - 9 - 9 -9 14/14
+==========================
+launcher:start_bencherl(['router_1@gpgnode-04.dcs.gla.ac.uk', 'server_1@gpgnode-04.dcs.gla.ac.uk', 'server_2@gpgnode-04.dcs.gla.ac.uk', 'server_3@gpgnode-05.dcs.gla.ac.uk', 'server_4@gpgnode-05.dcs.gla.ac.uk', 'server_5@gpgnode-05.dcs.gla.ac.uk', 'server_6@gpgnode-06.dcs.gla.ac.uk', 'server_7@gpgnode-06.dcs.gla.ac.uk', 'server_8@gpgnode-06.dcs.gla.ac.uk', 'server_9@gpgnode-07.dcs.gla.ac.uk', 'router_2@gpgnode-07.dcs.gla.ac.uk', 'server_10@gpgnode-07.dcs.gla.ac.uk', 'server_11@gpgnode-08.dcs.gla.ac.uk', 'server_12@gpgnode-08.dcs.gla.ac.uk', 'server_13@gpgnode-08.dcs.gla.ac.uk', 'server_14@gpgnode-09.dcs.gla.ac.uk', 'server_15@gpgnode-09.dcs.gla.ac.uk', 'server_16@gpgnode-09.dcs.gla.ac.uk', 'server_17@gpgnode-10.dcs.gla.ac.uk', 'server_18@gpgnode-10.dcs.gla.ac.uk', 'router_3@gpgnode-10.dcs.gla.ac.uk', 'server_19@gpgnode-11.dcs.gla.ac.uk', 'server_20@gpgnode-11.dcs.gla.ac.uk', 'server_21@gpgnode-11.dcs.gla.ac.uk', 'server_22@gpgnode-12.dcs.gla.ac.uk', 'server_23@gpgnode-12.dcs.gla.ac.uk', 'server_24@gpgnode-12.dcs.gla.ac.uk', 'server_25@gpgnode-13.dcs.gla.ac.uk', 'server_26@gpgnode-13.dcs.gla.ac.uk', 'server_27@gpgnode-13.dcs.gla.ac.uk', 'router_4@gpgnode-14.dcs.gla.ac.uk', 'server_28@gpgnode-14.dcs.gla.ac.uk', 'server_29@gpgnode-14.dcs.gla.ac.uk', 'server_30@gpgnode-15.dcs.gla.ac.uk', 'server_31@gpgnode-15.dcs.gla.ac.uk', 'server_32@gpgnode-15.dcs.gla.ac.uk', 'server_33@gpgnode-16.dcs.gla.ac.uk', 'server_34@gpgnode-16.dcs.gla.ac.uk', 'server_35@gpgnode-16.dcs.gla.ac.uk', 'server_36@gpgnode-17.dcs.gla.ac.uk', 'router_5@gpgnode-17.dcs.gla.ac.uk',
+'server_37@gpgnode-17.dcs.gla.ac.uk', 'server_38@gpgnode-18.dcs.gla.ac.uk', 'server_39@gpgnode-18.dcs.gla.ac.uk', 'server_40@gpgnode-18.dcs.gla.ac.uk', 'server_41@gpgnode-19.dcs.gla.ac.uk', 'server_42@gpgnode-19.dcs.gla.ac.uk', 'server_43@gpgnode-19.dcs.gla.ac.uk', 'server_44@gpgnode-20.dcs.gla.ac.uk', 'server_45@gpgnode-20.dcs.gla.ac.uk', 'client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk', 'client_8@gpgnode-03.dcs.gla.ac.uk', 'client_9@gpgnode-03.dcs.gla.ac.uk', 'client_10@gpgnode-03.dcs.gla.ac.uk', 'client_11@gpgnode-03.dcs.gla.ac.uk', 'client_12@gpgnode-03.dcs.gla.ac.uk', 'client_13@gpgnode-03.dcs.gla.ac.uk', 'client_14@gpgnode-03.dcs.gla.ac.uk', 'traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk', 'traffic_8@gpgnode-02.dcs.gla.ac.uk', 'traffic_9@gpgnode-02.dcs.gla.ac.uk', 'traffic_10@gpgnode-02.dcs.gla.ac.uk', 'traffic_11@gpgnode-02.dcs.gla.ac.uk', 'traffic_12@gpgnode-02.dcs.gla.ac.uk', 'traffic_13@gpgnode-02.dcs.gla.ac.uk', 'traffic_14@gpgnode-02.dcs.gla.ac.uk']).
+
++----------------+
+| LAUNCH CLIENTS |
++----------------+
+doped_client:launch(252000,14,'gpgnode-03.dcs.gla.ac.uk').
+doped_client:launch(250000,12,'gpgnode-18.dcs.gla.ac.uk').
+
++------------+
+| THROUGHPUT |
++------------+
+logger:launch("RSD-IM-NF-2_SRV-8CL-01", 4, 12, 220000, 8, 15, 60, 10000, 'gpgnode-03.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/experiment_3/2-6/"), traffic_generator:start(220000, ['client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk', 'client_8@gpgnode-03.dcs.gla.ac.uk'], ['traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk', 'traffic_8@gpgnode-02.dcs.gla.ac.uk']).
+
+logger:launch("RSD-IM-50-Nodes-01", 1, 12, 252000, 14, 15, 60, 10000, 'gpgnode-03.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/test/"), traffic_generator:start(252000, ['client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk', 'client_7@gpgnode-03.dcs.gla.ac.uk',  'client_8@gpgnode-03.dcs.gla.ac.uk', 'client_9@gpgnode-03.dcs.gla.ac.uk', 'client_10@gpgnode-03.dcs.gla.ac.uk', 'client_11@gpgnode-03.dcs.gla.ac.uk', 'client_12@gpgnode-03.dcs.gla.ac.uk', 'client_13@gpgnode-03.dcs.gla.ac.uk', 'client_14@gpgnode-03.dcs.gla.ac.uk'], ['traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk', 'traffic_7@gpgnode-02.dcs.gla.ac.uk', 'traffic_8@gpgnode-02.dcs.gla.ac.uk', 'traffic_9@gpgnode-02.dcs.gla.ac.uk', 'traffic_10@gpgnode-02.dcs.gla.ac.uk', 'traffic_11@gpgnode-02.dcs.gla.ac.uk', 'traffic_12@gpgnode-02.dcs.gla.ac.uk', 'traffic_13@gpgnode-02.dcs.gla.ac.uk', 'traffic_14@gpgnode-02.dcs.gla.ac.uk']), timer:sleep(300000), spawn(fun() -> baboon:chaos_on(1000) end).
+
+[spawn(X, fun() -> rhesus:chaos_on(5000) end) || X <- ['router_1@gpgnode-04.dcs.gla.ac.uk']].
+
+logger:launch("RSD-IM-04", 4, 12, 200000, 6, 15, 60, 10000, 'gpgnode-03.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/experiment_3/2-6/"), traffic_generator:start(200000, ['client_1@gpgnode-03.dcs.gla.ac.uk', 'client_2@gpgnode-03.dcs.gla.ac.uk', 'client_3@gpgnode-03.dcs.gla.ac.uk', 'client_4@gpgnode-03.dcs.gla.ac.uk', 'client_5@gpgnode-03.dcs.gla.ac.uk', 'client_6@gpgnode-03.dcs.gla.ac.uk'], ['traffic_1@gpgnode-02.dcs.gla.ac.uk', 'traffic_2@gpgnode-02.dcs.gla.ac.uk', 'traffic_3@gpgnode-02.dcs.gla.ac.uk', 'traffic_4@gpgnode-02.dcs.gla.ac.uk', 'traffic_5@gpgnode-02.dcs.gla.ac.uk', 'traffic_6@gpgnode-02.dcs.gla.ac.uk']).
+
+logger:launch("RD-IM-04", 2, 12, 225000, 4, 15, 60, 10000, 'gpgnode-18.dcs.gla.ac.uk', "/users/level4/1106740m/Desktop/Results/experiment_3/2-6/"), traffic_generator:start(225000, ['client_1@gpgnode-18.dcs.gla.ac.uk', 'client_2@gpgnode-18.dcs.gla.ac.uk', 'client_3@gpgnode-18.dcs.gla.ac.uk', 'client_4@gpgnode-18.dcs.gla.ac.uk'], ['traffic_1@gpgnode-19.dcs.gla.ac.uk', 'traffic_2@gpgnode-19.dcs.gla.ac.uk', 'traffic_3@gpgnode-19.dcs.gla.ac.uk', 'traffic_4@gpgnode-19.dcs.gla.ac.uk']).
+
+, timer:sleep(3000).
+
+spawn('server_1@gpgnode-05.dcs.gla.ac.uk', fun() -> percept2:profile("test_server1.dat", [message,{callgraph, [server]}])end).
+
+spawn('server_1@gpgnode-05.dcs.gla.ac.uk', fun() -> percept2:stop_profile() end).
+
+ 'server_2@gpgnode-06.dcs.gla.ac.uk', 'server_3@gpgnode-07.dcs.gla.ac.uk', 'server_4@gpgnode-08.dcs.gla.ac.uk', 'server_5@gpgnode-09.dcs.gla.ac.uk', 'server_6@gpgnode-10.dcs.gla.ac.uk', 'server_7@gpgnode-11.dcs.gla.ac.uk', 'server_8@gpgnode-12.dcs.gla.ac.uk', 'server_9@gpgnode-18.dcs.gla.ac.uk', 'server_10@gpgnode-19.dcs.gla.ac.uk', 'server_11@gpgnode-15.dcs.gla.ac.uk', 'server_12@gpgnode-16.dcs.gla.ac.uk', 'server_13@gpgnode-18.dcs.gla.ac.uk', 'server_14@gpgnode-19.dcs.gla.ac.uk', 'server_15@gpgnode-19.dcs.gla.ac.uk', 'server_16@gpgnode-20.dcs.gla.ac.uk',
+
+cd ~/Desktop/RSD-IM
+
+ets:i().
+q().
+cd ~/Desktop/RSD-IM
+
+killall beam.smp
+cd ~/Desktop/RSD-IM
+
+
+exit
+
+cd ~/Desktop/RD-IM
+
+===============================
+ -------- LOCAL TESTS --------
+===============================
+launcher:start_bencherl(['router_1@ishigaki', 'server_1@ishigaki', 'server_2@ishigaki', 'server_3@ishigaki', 'router_2@ishigaki', 'server_4@ishigaki', 'server_5@ishigaki', 'server_6@ishigaki', 'router_3@ishigaki', 'server_7@ishigaki', 'server_8@ishigaki', 'server_9@ishigaki', 'router_4@ishigaki', 'server_10@ishigaki', 'server_11@ishigaki', 'server_12@ishigaki', 'client_1@ishigaki', 'client_2@ishigaki', 'client_3@ishigaki', 'client_4@ishigaki', 'traffic_1@ishigaki', 'traffic_2@ishigaki', 'traffic_3@ishigaki', 'traffic_4@ishigaki']).
+
+debug:launch(4,"ishigaki","/home/mario/Desktop/Test/").
+
+launcher:start_bencherl(['router_1@ishigaki', 'server_1@ishigaki', 'server_2@ishigaki', 'router_2@ishigaki', 'server_3@ishigaki', 'server_4@ishigaki', 'client_1@ishigaki', 'client_2@ishigaki', 'client_3@ishigaki', 'client_4@ishigaki', 'traffic_1@ishigaki', 'traffic_2@ishigaki', 'traffic_3@ishigaki', 'traffic_4@ishigaki']).
+
+doped_client:launch(20000,4,'ishigaki').
+
+logger:launch("test_1", 4, 12, 5000, 4, 15, 60, 10000, 'ishigaki', "/home/mario/Desktop/Test/"), traffic_generator:start(20000, ['client_1@ishigaki', 'client_2@ishigaki', 'client_3@ishigaki', 'client_4@ishigaki'], ['traffic_1@ishigaki', 'traffic_2@ishigaki', 'traffic_3@ishigaki', 'traffic_4@ishigaki']).
+
+exit(pid(0,44,0),kill),timer:sleep(50),exit(pid(0,46,0),kill).
+
+[spawn(X, fun() -> rhesus:chaos_on(5000) end) || X <- ['router_1@ishigaki', 'router_2@ishigaki', 'router_1@ishigaki', 'router_2@ishigaki']].
+
+lists:foreach(fun(X) -> spawn(X, fun() -> rhesus:chaos_on(5000) end), timer:sleep(250) end, ['router_1@ishigaki', 'router_2@ishigaki', 'router_1@ishigaki', 'router_2@ishigaki']).
+

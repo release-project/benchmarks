@@ -7,7 +7,7 @@ Here we keep open source benchmarks that were developed and used in the RELEASE 
 
 * DE-Bench -- a scalable reliable peer-to-peer benchmarking tool for distributed Erlang based on Basho Bench. It measures throughput and latency of distributed Erlang commands on a set of Erlang nodes.
 
-* IM -- an instant messaging application.
+* IM -- an generic instant messaging application that has some level of agreement with real life IMs in terms of general functionality, number of messages and users. The benchmark follows client-server pattern, where the server side supports the IM functionality, and the client side provides the traffic generation.
 
 * Orbit -- a symbolic computing kernel and a generalization of a transitive closure computation.
 
